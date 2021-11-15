@@ -1,0 +1,75 @@
+package subsetsum;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+/**
+ * Created by s357239 on 05.11.18.
+ */
+public class SubsetSum {
+
+    public static void main(String[] args){
+        double p = Math.PI;
+
+        double[] menge = erstellen();                   //Array erstellen
+
+        double minsum = menge[0];                       //Array an der Stelle 1
+
+        long xmin = 0;
+
+        for(long x=0; x<=Math.pow(2,menge.length); x++){
+            double sum = 0;
+            for(int i=0; i<menge.length; i++){
+                if(((x >> i) & 1) == 1)
+                    sum = sum + menge[i];
+            }
+            if(Math.abs(p - sum) < Math.abs(p - minsum)){
+                xmin = x;
+                minsum = sum;
+            }
+        }
+
+        double[] a = new double[Long.bitCount(xmin)];
+        int k = 0;
+        for(int j=0; j<menge.length; j++){
+            if(((xmin >> j) & 1) == 1){
+                a[k] = menge[j];
+                k++;
+            }
+        }
+
+        System.out.println("Best subset sum:");
+        System.out.println(minsum + " " + Arrays.toString(a));
+    }
+
+
+
+
+
+    public static double[] erstellen(){                         //Erstellung eines Arrays
+        Scanner input = new Scanner(System.in);
+        System.out.println("How many numbers should be read?");
+        int k = input.nextInt();
+        input.nextLine();
+        double[] a = new double[k];
+
+        System.out.println("Enter 1st number:");
+        a[0] = input.nextDouble();
+
+        if(k>1){
+            System.out.println("Enter 2nd number:");
+            a[1] = input.nextDouble();
+        }
+        if(k>2){
+            System.out.println("Enter 3rd number:");
+            a[2] = input.nextDouble();
+        }
+        if(k>3){
+            for (int i = 3; i < k; i++) {
+                System.out.println("Enter " + (i + 1) + "th number:");
+                a[i] = input.nextDouble();
+            }
+        }
+        return a;
+    }
+}
